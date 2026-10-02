@@ -1,81 +1,61 @@
-/**
- * Página principal de la aplicación.
- *
- * Es el único componente con estado de nivel de página: mantiene qué modelo está
- * activo para que el panel principal y la sección de predicción permanezcan
- * sincronizados.
- */
-
 "use client";
 
 import { useState } from "react";
-import { Cabecera } from "@/components/layout/Header";
-import { PiePagina } from "@/components/layout/Footer";
-import { Dashboard } from "@/components/layout/Dashboard";
 import { SeccionPrediccion } from "@/components/prediction/PredictionSection";
-import { TarjetaInfoModelo } from "@/components/models/ModelInfoCard";
-import { AvisoLimitacion } from "@/components/models/TechnicalNotice";
-import { LISTA_MODELOS } from "@/config/models";
-import type { DefinicionModelo, ModeloId } from "@/types/models";
+import type { ModeloId } from "@/types/models";
 
-/**
- * Compone la interfaz completa: panel, predicción, información de modelos y
- * documentación de la integración.
- */
 export default function PaginaPrincipal() {
   const [modeloActivo, setModeloActivo] = useState<ModeloId>("dolar");
 
-  /** Lleva al usuario a la sección de predicción con el modelo elegido. */
-  function usarModelo(modelo: DefinicionModelo) {
-    setModeloActivo(modelo.id);
-    // El desplazamiento se realiza tras el repintado para asegurar que la
-    // sección ya refleja el modelo seleccionado.
-    requestAnimationFrame(() => {
-      document
-        .getElementById("prediccion")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
-
   return (
-    <>
-      <Cabecera />
+    <div className="app-shell flex min-h-screen flex-col">
+      <header className="border-b border-[#d8ded5] bg-[#f8faf6]">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
+          <a href="#inicio" className="flex items-center gap-3" aria-label="SignalScope, inicio">
+            <span className="flex size-9 items-center justify-center rounded-md bg-[#c8f169] text-sm font-black text-[#19241a]">
+              S
+            </span>
+            <span>
+              <span className="block text-sm font-bold tracking-tight text-[#1b251d]">SignalScope</span>
+              <span className="block text-[11px] text-[#69746a]">Estudio de predicción</span>
+            </span>
+          </a>
+          <span className="hidden items-center gap-2 text-xs font-medium text-[#687368] sm:flex">
+            <span className="size-2 rounded-full bg-[#78a843]" />
+            3 modelos disponibles
+          </span>
+        </div>
+      </header>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6">
-        <Dashboard onUsarModelo={usarModelo} />
+      <main id="inicio" className="mx-auto w-full max-w-6xl flex-1 px-5 py-10 sm:px-8 sm:py-14">
+        <div className="mb-9 flex flex-col justify-between gap-5 border-b border-[#d8ded5] pb-8 sm:flex-row sm:items-end">
+          <div>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-[#66843f]">
+              Laboratorio · Modelos de regresión
+            </p>
+            <h1 className="max-w-xl text-3xl font-semibold leading-tight tracking-tight text-[#1b251d] sm:text-4xl">
+              Convierte variables en una estimación.
+            </h1>
+          </div>
+          <p className="max-w-sm text-sm leading-6 text-[#687368]">
+            Selecciona un modelo, introduce sus datos y consulta el resultado al instante.
+          </p>
+        </div>
 
-        <div className="mt-14">
+        <div className="prediction-workspace">
           <SeccionPrediccion
             modeloActivo={modeloActivo}
             onCambiarModelo={setModeloActivo}
           />
         </div>
-
-        <section id="modelos" aria-labelledby="titulo-info" className="mt-14">
-          <h2
-            id="titulo-info"
-            className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50"
-          >
-            Información de los modelos
-          </h2>
-          <p className="mt-1 mb-4 text-sm text-zinc-600 dark:text-zinc-400">
-            Especificación completa de cada modelo: variables, ecuación,
-            coeficientes y métricas de evaluación.
-          </p>
-
-          <div className="grid gap-4 xl:grid-cols-3">
-            {LISTA_MODELOS.map((modelo) => (
-              <TarjetaInfoModelo key={modelo.id} modelo={modelo} />
-            ))}
-          </div>
-        </section>
-
-        <div className="mt-14">
-          <AvisoLimitacion />
-        </div>
       </main>
 
-      <PiePagina />
-    </>
+      <footer className="border-t border-[#d8ded5] bg-[#f8faf6]">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-1 px-5 py-5 text-xs text-[#687368] sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <span>SignalScope <span className="text-[#9aa397]">/</span> Predicción interactiva</span>
+          <span>Las estimaciones se basan en las variables ingresadas.</span>
+        </div>
+      </footer>
+    </div>
   );
 }

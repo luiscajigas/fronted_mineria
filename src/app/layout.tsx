@@ -13,9 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SignalScope · Dashboard predictivo",
-  description:
-    "Interfaz de analítica predictiva para explorar tres modelos de regresión con enfoque financiero y sanitario.",
+  title: "SignalScope · Estudio de predicción",
+  description: "Estima resultados con modelos de regresión interactivos.",
 };
 
 export default function RootLayout({
@@ -26,7 +25,7 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-transparent text-zinc-900 antialiased dark:text-zinc-50">
+      <body className="flex min-h-full flex-col bg-transparent text-zinc-900 antialiased">
         {children}
       </body>
     </html>

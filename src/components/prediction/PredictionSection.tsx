@@ -42,28 +42,40 @@ export function SeccionPrediccion({
   }
 
   return (
-    <section id="prediccion" aria-labelledby="titulo-prediccion" className="space-y-6">
-      <div>
+    <section id="prediccion" aria-labelledby="titulo-prediccion" className="space-y-5">
+      <div className="flex flex-col justify-between gap-3 border-b border-zinc-200 pb-4 sm:flex-row sm:items-end dark:border-zinc-800">
+        <div>
+          <p className="mb-1 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#66843f]">
+            Área de trabajo / 01
+          </p>
         <h2
           id="titulo-prediccion"
           className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50"
         >
-          Realizar una predicción
+          Prepara una estimación
         </h2>
+        </div>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          Elige el modelo y completa sus variables. La interfaz valida cada valor
-          contra el rango observado durante el entrenamiento.
+          Los valores se validan con los rangos observados durante el entrenamiento.
         </p>
       </div>
 
-      <SelectorModelo
-        modelos={LISTA_MODELOS}
-        seleccionado={modeloActivo}
-        onSeleccionar={cambiarModelo}
-      />
+      <div className="grid items-start gap-6 lg:grid-cols-[250px_minmax(0,1fr)]">
+        <aside className="lg:sticky lg:top-6">
+          <div className="mb-3 flex items-center justify-between">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
+              Elige un modelo
+            </h3>
+            <span className="font-mono text-[10px] text-zinc-400">03 OPCIONES</span>
+          </div>
+          <SelectorModelo
+            modelos={LISTA_MODELOS}
+            seleccionado={modeloActivo}
+            onSeleccionar={cambiarModelo}
+          />
+        </aside>
 
-      <div className="grid gap-6 lg:grid-cols-5">
-        <div className="lg:col-span-3">
+        <div className="min-w-0 space-y-4">
           <Tarjeta>
             <TarjetaCabecera
               icono={<Icono className="size-5" />}
@@ -80,9 +92,6 @@ export function SeccionPrediccion({
               />
             </TarjetaCuerpo>
           </Tarjeta>
-        </div>
-
-        <div className="lg:col-span-2">
           {resultado ? (
             <TarjetaResultado
               modelo={modelo}
@@ -90,20 +99,24 @@ export function SeccionPrediccion({
               onReiniciar={() => setResultado(null)}
             />
           ) : (
-            <Tarjeta variante="plana" className="h-full">
-              <TarjetaCuerpo className="flex h-full flex-col items-center justify-center py-12 text-center">
+            <Tarjeta variante="plana" className="overflow-hidden border-dashed">
+              <TarjetaCuerpo className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
                 <span
-                  className={`flex size-12 items-center justify-center rounded-full border ${modelo.acento.fondo} ${modelo.acento.borde} ${modelo.acento.texto}`}
+                  className={`flex size-10 shrink-0 items-center justify-center rounded-md border ${modelo.acento.fondo} ${modelo.acento.borde} ${modelo.acento.texto}`}
                 >
-                  <Icono className="size-6" />
+                  <Icono className="size-5" />
                 </span>
-                <p className="mt-4 text-sm font-medium text-zinc-700 dark:text-zinc-300">
-                  Sin predicción todavía
-                </p>
-                <p className="mt-1 max-w-xs text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
-                  Completa las variables y pulsa «Calcular predicción». El
-                  resultado aparecerá aquí.
-                </p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+                    Resultado pendiente
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
+                    Completa las variables para ver aquí la estimación y el detalle del cálculo.
+                  </p>
+                </div>
+                <span className="w-fit rounded-sm bg-zinc-100 px-2 py-1 font-mono text-[10px] uppercase tracking-wide text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                  Sin calcular
+                </span>
               </TarjetaCuerpo>
             </Tarjeta>
           )}

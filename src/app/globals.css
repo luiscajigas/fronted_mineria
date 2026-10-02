@@ -1,22 +1,12 @@
 @import "tailwindcss";
-
-/**
- * Estilos globales.
- *
- * Se define el tema claro y oscuro mediante variables CSS y se adaptan los
- * controles nativos para que la interfaz sea coherente en ambos modos.
- */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f4f7ff;
-  --background-strong: #e9edff;
-  --foreground: #101828;
-  --panel: rgba(255, 255, 255, 0.78);
-  --panel-border: rgba(79, 70, 229, 0.15);
-  --accent: #4338ca;
-  --accent-strong: #312e81;
-  --accent-soft: #e0e7ff;
-  --highlight: #f97316;
+  --background: #eef2ed;
+  --foreground: #1b251d;
+  --surface: #f8faf6;
+  --line: #d8ded5;
+  --accent: #c8f169;
 }
 
 @theme inline {
@@ -24,20 +14,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #080d1d;
-    --background-strong: #111827;
-    --foreground: #f8fafc;
-    --panel: rgba(15, 23, 42, 0.78);
-    --panel-border: rgba(96, 165, 250, 0.2);
-    --accent: #8b5cf6;
-    --accent-strong: #c084fc;
-    --accent-soft: rgba(139, 92, 246, 0.18);
-    --highlight: #fb923c;
-  }
 }
 
 * {
@@ -49,20 +25,14 @@ html {
 }
 
 body {
-  background:
-    radial-gradient(circle at top left, rgba(99, 102, 241, 0.18), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.16), transparent 24%),
-    linear-gradient(135deg, var(--background) 0%, var(--background-strong) 100%);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.2), transparent 55%);
+.app-shell {
+  background-image: linear-gradient(rgba(27, 37, 29, 0.025) 1px, transparent 1px);
+  background-size: 100% 36px;
 }
 
 /* Los controles numéricos muestran la unidad en un campo aparte, por lo que se

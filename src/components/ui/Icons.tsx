@@ -21,21 +21,22 @@ const BASE: IconoProps = {
   focusable: false,
 };
 
-/** Icono de gráfica ascendente, usado para el modelo de dólar. */
-export function IconoTendencia(props: IconoProps) {
+/** Icono monetario, usado para el modelo de dólar. */
+export function IconoMoneda(props: IconoProps) {
   return (
     <svg {...BASE} {...props}>
-      <path d="M3 17l5-5 4 4 7-7" />
-      <path d="M14 9h5v5" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M15.5 8.5c-.7-.7-1.8-1.1-3.1-1.1-1.7 0-2.9.9-2.9 2.2 0 3.5 5.8 1.1 5.8 4.7 0 1.3-1.2 2.3-3 2.3-1.3 0-2.6-.5-3.5-1.4M12 5.5v13" />
     </svg>
   );
 }
 
-/** Icono de actividad, usado para el modelo de glucosa. */
-export function IconoActividad(props: IconoProps) {
+/** Icono de gota, usado para el modelo de glucosa. */
+export function IconoGlucosa(props: IconoProps) {
   return (
     <svg {...BASE} {...props}>
-      <path d="M3 12h4l2.5-6 4 12L16 12h5" />
+      <path d="M12 3.5c-2.3 3.2-6.5 7.1-6.5 11.1a6.5 6.5 0 0 0 13 0c0-4-4.2-7.9-6.5-11.1z" />
+      <path d="M9 15.5a3.2 3.2 0 0 0 3.2 3.1" />
     </svg>
   );
 }
@@ -139,7 +140,7 @@ export function IconoFlechaArriba(props: IconoProps) {
 
 /** Mapa de iconos por modelo, para resolver el icono a partir del identificador. */
 export const ICONOS_POR_MODELO = {
-  dolar: IconoTendencia,
-  glucosa: IconoActividad,
+  dolar: IconoMoneda,
+  glucosa: IconoGlucosa,
   energia: IconoEnergia,
 } as const;
